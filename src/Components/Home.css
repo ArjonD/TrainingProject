@@ -1,0 +1,87 @@
+.home-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.welcome-section {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem 1rem;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    border: 2px solid #dee2e6;
+}
+
+.welcome-section h2 {
+    font-size: 2rem;
+    color: #343a40;
+    margin-bottom: 1rem;
+}
+
+.welcome-section p {
+    font-size: 1.1rem;
+    color: #6c757d;
+}
+
+.features-section {
+    margin-bottom: 3rem;
+}
+
+.feature-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.feature-card {
+    flex: 1;
+    min-width: 280px;
+    padding: 1.5rem;
+    background-color: white;
+    border-radius: 8px;
+    border: 2px solid #dee2e6;
+}
+
+.feature-card h3 {
+    color: #007bff;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.feature-card p {
+    color: #495057;
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+}
+
+.info-section {
+    background-color: #e9ecef;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+    border: 2px solid #ced4da;
+}
+
+.info-section h3 {
+    color: #343a40;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.info-section p {
+    color: #495057;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+    .feature-cards {
+        flex-direction: column;
+    }
+
+    .feature-card {
+        width: 100%;
+    }
+}

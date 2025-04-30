@@ -1,0 +1,49 @@
+.grid-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.grid-container h2 {
+  color: #343a40;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+.filter-container {
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.filter-container input {
+  padding: 0.75rem;
+  width: 300px;
+  border-radius: 4px;
+  border: 2px solid #dee2e6;
+  font-size: 1rem;
+  transition: border-color 0.15s ease-in-out;
+}
+
+.filter-container input:focus {
+  outline: none;
+  border-color: #80bdff;
+}
+
+.filter-container input::placeholder {
+  color: #adb5bd;
+}
+
+.ag-theme-alpine {
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ag-theme-alpine .ag-header {
+  background-color: #f8f9fa;
+}
+
+.ag-theme-alpine .ag-header-cell {
+  font-weight: 600;
+}
