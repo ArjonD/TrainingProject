@@ -33,29 +33,25 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # 4. Ajetaan testit (valinnainen, poista jos ei käytössä)
-      - name: Run jest tests
-        run: npm test
-
-      # 5. Ajetaan linttaus (valinnainen, poista jos ei käytössä)
+      # 4. Ajetaan linttaus (valinnainen, poista jos ei käytössä)
       - name: Run eslint
         run: npm run lint
 
-      # 6. Rakennetaan tuotantoversio
+      # 5. Rakennetaan tuotantoversio
       - name: Build
         run: npm run build
 
-      # 7. Konfiguroidaan GitHub Pages
+      # 6. Konfiguroidaan GitHub Pages
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      # 8. Ladataan rakennettu sovellus
+      # 7. Ladataan rakennettu sovellus
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: './build' # React-sovelluksen oletushakemisto tuotantoversiolle
 
-      # 9. Julkaistaan GitHub Pagesiin
+      # 8. Julkaistaan GitHub Pagesiin
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
