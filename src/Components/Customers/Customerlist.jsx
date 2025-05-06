@@ -80,6 +80,58 @@ function Customerlist() {
         setDeleteOpen(true);
     };
 
+    const exportToCsv = () => {
+        const csvData = customers.map(customer => {
+            const { links, _links, ...filteredCustomer } = customer;
+            return filteredCustomer;
+        });
+        
+        const headers = [
+            'First Name',
+            'Last Name',
+            'Email',
+            'Phone',
+            'Street Address',
+            'City',
+            'Postal Code'
+        ];
+        
+        const csvHeader = headers.join(',') + '\r\n';
+        
+        const csvRows = csvData.map(customer => {
+            const values = [
+                customer.firstname || '',
+                customer.lastname || '',
+                customer.email || '',
+                customer.phone || '',
+                customer.streetaddress || '',
+                customer.city || '',
+                customer.postcode || ''
+            ];
+            
+            return values.map(value => 
+                `"${value.toString().replace(/"/g, '""')}"`
+            ).join(',');
+        }).join('\r\n');
+        
+        const csvString = csvHeader + csvRows;
+        
+        const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        
+        const url = URL.createObjectURL(blob);
+        
+        link.setAttribute('href', url);
+        link.setAttribute('download', 'customers.csv');
+        link.style.display = 'none';
+        
+        document.body.appendChild(link);
+        link.click();
+        
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    };
+
     const columnDefs = [
         { headerName: 'First Name', field: 'firstname', flex: 1 },
         { headerName: 'Last Name', field: 'lastname', flex: 1 },
@@ -124,19 +176,35 @@ function Customerlist() {
                         onChange={handleFilterChange}
                     />
                 </div>
-                <button
-                    onClick={handleAddCustomer}
-                    style={{
-                        padding: '8px 16px',
-                        backgroundColor: '#007bff',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '4px',
-                        cursor: 'pointer'
-                    }}
-                >
-                    Add New Customer
-                </button>
+                <div>
+                    <button
+                        onClick={exportToCsv}
+                        style={{
+                            marginRight: '10px',
+                            padding: '8px 16px',
+                            backgroundColor: '#28a745',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '4px',
+                            cursor: 'pointer'
+                        }}
+                    >
+                        Export to CSV
+                    </button>
+                    <button
+                        onClick={handleAddCustomer}
+                        style={{
+                            padding: '8px 16px',
+                            backgroundColor: '#007bff',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '4px',
+                            cursor: 'pointer'
+                        }}
+                    >
+                        Add New Customer
+                    </button>
+                </div>
             </div>
 
             <div className="ag-theme-alpine" style={{ height: 600, width: '100%' }}>

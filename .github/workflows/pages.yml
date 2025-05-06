@@ -1,0 +1,61 @@
+# Workflow for deploying React app to GitHub Pages
+name: Deploy static content to Pages
+
+on:
+  push:
+    branches: ['main'] # Suoritetaan, kun muutokset pusketaan 'main'-haaraan
+  workflow_dispatch: # Mahdollistaa manuaalisen käynnistyksen
+
+# GitHub Pages -oikeudet
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    steps:
+      # 1. Kloonataan repositorio
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. Asennetaan Node.js
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/* # Käytetään uusinta LTS-versiota
+          cache: 'npm'
+
+      # 3. Asennetaan riippuvuudet
+      - name: Install dependencies
+        run: npm install
+
+      # 4. Ajetaan testit (valinnainen, poista jos ei käytössä)
+      - name: Run jest tests
+        run: npm test
+
+      # 5. Ajetaan linttaus (valinnainen, poista jos ei käytössä)
+      - name: Run eslint
+        run: npm run lint
+
+      # 6. Rakennetaan tuotantoversio
+      - name: Build
+        run: npm run build
+
+      # 7. Konfiguroidaan GitHub Pages
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      # 8. Ladataan rakennettu sovellus
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './build' # React-sovelluksen oletushakemisto tuotantoversiolle
+
+      # 9. Julkaistaan GitHub Pagesiin
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

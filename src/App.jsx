@@ -27,6 +27,12 @@ function App() {
             >
               Trainings
             </NavLink>
+            <NavLink
+              to={"/Calendar"}
+              className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
+            >
+              Calendar
+            </NavLink>
           </div>
         </div>
       </nav>
