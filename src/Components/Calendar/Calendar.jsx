@@ -5,21 +5,11 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { getCustomers } from '../../Api/generalAPI';
 import './Calendar.css';
 
-const EventComponent = ({ event }) => {
-    return (
-        <div className="rbc-event-content" title={`${event.activity} / ${event.customer}\nDuration: ${event.duration} min`}>
-            <div className="event-title">{event.activity}</div>
-            <div className="event-customer">{event.customer}</div>
-        </div>
-    );
-};
-
 const localizer = momentLocalizer(moment);
 
 function Calendar() {
     const [events, setEvents] = useState([]);
     const [view, setView] = useState('week');
-    const [date, setDate] = useState(new Date());
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {

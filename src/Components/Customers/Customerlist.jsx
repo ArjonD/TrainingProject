@@ -82,10 +82,10 @@ function Customerlist() {
 
     const exportToCsv = () => {
         const csvData = customers.map(customer => {
-            const { links, _links, ...filteredCustomer } = customer;
-            return filteredCustomer;
+            const { firstname, lastname, email, phone, streetaddress, city, postcode } = customer;
+            return { firstname, lastname, email, phone, streetaddress, city, postcode };
         });
-        
+
         const headers = [
             'First Name',
             'Last Name',
@@ -95,9 +95,9 @@ function Customerlist() {
             'City',
             'Postal Code'
         ];
-        
+
         const csvHeader = headers.join(',') + '\r\n';
-        
+
         const csvRows = csvData.map(customer => {
             const values = [
                 customer.firstname || '',
@@ -108,26 +108,26 @@ function Customerlist() {
                 customer.city || '',
                 customer.postcode || ''
             ];
-            
-            return values.map(value => 
+
+            return values.map(value =>
                 `"${value.toString().replace(/"/g, '""')}"`
             ).join(',');
         }).join('\r\n');
-        
+
         const csvString = csvHeader + csvRows;
-        
+
         const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
         const link = document.createElement('a');
-        
+
         const url = URL.createObjectURL(blob);
-        
+
         link.setAttribute('href', url);
         link.setAttribute('download', 'customers.csv');
         link.style.display = 'none';
-        
+
         document.body.appendChild(link);
         link.click();
-        
+
         document.body.removeChild(link);
         URL.revokeObjectURL(url);
     };
