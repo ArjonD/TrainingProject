@@ -1,12 +1,13 @@
-# Workflow for deploying React app to GitHub Pages
+# Simple workflow for deploying static content to GitHub Pages
 name: Deploy static content to Pages
 
 on:
   push:
-    branches: ['main'] # Suoritetaan, kun muutokset pusketaan 'main'-haaraan
-  workflow_dispatch: # Mahdollistaa manuaalisen käynnistyksen
+    branches: ['main']
 
-# GitHub Pages -oikeudet
+  workflow_dispatch:
+
+# Sets the GITHUB_TOKEN permissions to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
@@ -16,42 +17,39 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment:
-      name: github-pages
+      name: github-pages # Tämä lisätty
     steps:
-      # 1. Kloonataan repositorio
       - name: Checkout
         uses: actions/checkout@v4
-
-      # 2. Asennetaan Node.js
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: lts/* # Käytetään uusinta LTS-versiota
+          node-version: lts/*
           cache: 'npm'
 
-      # 3. Asennetaan riippuvuudet
+      # Remove lockfile to fix issue https://github.com/npm/cli/issues/4828
+      - name: Remove package-lock.json
+        run: rm package-lock.json
+
       - name: Install dependencies
         run: npm install
 
-      # 4. Ajetaan linttaus (valinnainen, poista jos ei käytössä)
+      - name: Run jest tests
+        run: npm test
+
       - name: Run eslint
         run: npm run lint
 
-      # 5. Rakennetaan tuotantoversio
       - name: Build
-        run: npm run build
+        run: npx vite build --base=/Trainingproject/
 
-      # 6. Konfiguroidaan GitHub Pages
+      # Sivuston luonti valmiilla actioneilla:
       - name: Setup Pages
         uses: actions/configure-pages@v4
-
-      # 7. Ladataan rakennettu sovellus
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './build' # React-sovelluksen oletushakemisto tuotantoversiolle
-
-      # 8. Julkaistaan GitHub Pagesiin
+          path: './dist' # Varmista, että tämä viittaa oikeaan hakemistoon
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
